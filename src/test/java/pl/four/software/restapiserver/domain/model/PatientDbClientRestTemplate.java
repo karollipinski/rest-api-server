@@ -15,7 +15,7 @@ import java.net.URI;
 import java.util.*;
 
 @Slf4j
-public class ClinicDbClientRestTemplate {
+public class PatientDbClientRestTemplate {
 
     private static final String REST_SERVER_URI = "http://localhost:8090/RestApiServer/api/db/patients";
 

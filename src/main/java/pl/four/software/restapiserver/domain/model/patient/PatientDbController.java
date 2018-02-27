@@ -24,7 +24,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/db/patients")
-public class ClinicDbController {
+public class PatientDbController {
 
     @Autowired
     @Qualifier("PatientServiceDB")

@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Slf4j
-public class ClinicInMemoryClientRestTemplate {
+public class PatientInMemoryClientRestTemplate {
 
     private static final String REST_SERVER_URI = "http://localhost:8090/RestApiServer/api/memory/patients";
 

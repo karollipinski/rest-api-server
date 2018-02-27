@@ -24,7 +24,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/api/memory/patients")
-public class ClinicInMemoryController {
+public class PatientInMemoryController {
 
     @Autowired
     @Qualifier("PatienServiceInMemory")
