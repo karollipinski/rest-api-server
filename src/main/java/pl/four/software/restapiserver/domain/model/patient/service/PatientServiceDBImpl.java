@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pl.four.software.restapiserver.domain.model.patient.dto.PatientFiltr;
 import pl.four.software.restapiserver.domain.model.patient.dto.PatientDto;
+import pl.four.software.restapiserver.domain.model.patient.dto.PatientFiltr;
 import pl.four.software.restapiserver.domain.model.patient.entity.Patient;
 import pl.four.software.restapiserver.domain.model.patient.rapository.PatientQueryDslReporitory;
 import pl.four.software.restapiserver.domain.model.patient.rapository.PatientRepository;
@@ -23,7 +23,7 @@ public class PatientServiceDBImpl implements PatientService {
 
     @Override
     public Optional<Patient> findById(long id) {
-        return Optional.ofNullable(patientRepository.findOne(id));
+        return patientRepository.findById(id);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class PatientServiceDBImpl implements PatientService {
 
     @Override
     public void delete(long id) {
-        patientRepository.delete(id);
+        patientRepository.deleteById(id);
     }
 
     @Override

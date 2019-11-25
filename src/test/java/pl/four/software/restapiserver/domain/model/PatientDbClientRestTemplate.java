@@ -3,7 +3,10 @@ package pl.four.software.restapiserver.domain.model;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -12,12 +15,14 @@ import pl.four.software.restapiserver.domain.model.patient.entity.Patient;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 public class PatientDbClientRestTemplate {
 
-    private static final String REST_SERVER_URI = "http://localhost:8090/RestApiServer/api/db/patients";
+    private static final String REST_SERVER_URI = "http://localhost:8090/api/db/patients";
 
     public static void main(String[] args) {
         listAll();
@@ -29,16 +34,6 @@ public class PatientDbClientRestTemplate {
         delete();
     }
 
-    private static HttpHeaders getHeaders() {
-        String plainCredentials = "admin:abc123";
-        String base64Credentials = Base64.getEncoder()
-                                         .encodeToString(plainCredentials.getBytes());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(HttpHeaders.AUTHORIZATION, "Basic " + base64Credentials);
-        httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        return httpHeaders;
-    }
-
     private static void listAll() {
         log.info("Patient list All --------------");
 
@@ -46,7 +41,7 @@ public class PatientDbClientRestTemplate {
 
         ResponseEntity<List<Patient>> exchange = restTemplate.exchange(REST_SERVER_URI,
                                                                        HttpMethod.GET,
-                                                                       new HttpEntity<>(getHeaders()),
+                                                                       new HttpEntity<>(HeadersBasicAuthUtils.getHeaders()),
                                                                        new ParameterizedTypeReference<List<Patient>>() {});
         List<Patient> result = exchange.getBody();
         if (Objects.nonNull(result) && !result.isEmpty()) {
@@ -63,7 +58,7 @@ public class PatientDbClientRestTemplate {
 
         ResponseEntity<Patient> exchange = restTemplate.exchange(REST_SERVER_URI + "/1",
                                                                  HttpMethod.GET,
-                                                                 new HttpEntity<>(getHeaders()),
+                                                                 new HttpEntity<>(HeadersBasicAuthUtils.getHeaders()),
                                                                  Patient.class);
         Patient patient = exchange.getBody();
         log.info("Get Patient result {} ", patient);
@@ -74,7 +69,7 @@ public class PatientDbClientRestTemplate {
         RestTemplate restTemplate = new RestTemplate();
 
         try {
-            HttpEntity<Object> requestEntity = new HttpEntity<>(getHeaders());
+            HttpEntity<Object> requestEntity = new HttpEntity<>(HeadersBasicAuthUtils.getHeaders());
             ResponseEntity<Patient> entity = restTemplate.exchange(REST_SERVER_URI + "/8", HttpMethod.GET,
                                                                    requestEntity,
                                                                    Patient.class);
@@ -99,7 +94,7 @@ public class PatientDbClientRestTemplate {
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(REST_SERVER_URI + "/8",
                                                                       HttpMethod.GET,
-                                                                      new HttpEntity<>(getHeaders()), String.class);
+                                                                      new HttpEntity<>(HeadersBasicAuthUtils.getHeaders()), String.class);
 
         String responseEntityBody = responseEntity.getBody();
 
@@ -130,7 +125,7 @@ public class PatientDbClientRestTemplate {
                                  .date(new Date())
                                  .build();
 
-        HttpEntity request = new HttpEntity(patient, getHeaders());
+        HttpEntity request = new HttpEntity(patient, HeadersBasicAuthUtils.getHeaders());
         URI uri = restTemplate.postForLocation(REST_SERVER_URI, request, Patient.class);
         log.info("Location result {}", uri.toASCIIString());
     }
@@ -144,8 +139,8 @@ public class PatientDbClientRestTemplate {
                                  .pesel("473458345")
                                  .date(new Date())
                                  .build();
-        HttpEntity request = new HttpEntity(patient, getHeaders());
-        ResponseEntity<String> exchange = restTemplate.exchange(REST_SERVER_URI + "/1", HttpMethod.PUT, new HttpEntity<>(getHeaders()), String.class);
+        HttpEntity request = new HttpEntity(patient, HeadersBasicAuthUtils.getHeaders());
+        ResponseEntity<String> exchange = restTemplate.exchange(REST_SERVER_URI + "/1", HttpMethod.PUT, new HttpEntity<>(HeadersBasicAuthUtils.getHeaders()), String.class);
 
         log.info("Updateg patient result {}", patient);
     }
@@ -154,7 +149,7 @@ public class PatientDbClientRestTemplate {
         log.info("Delete Patient --------------");
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<String> exchange = restTemplate.exchange(REST_SERVER_URI + "/1", HttpMethod.DELETE, new HttpEntity<>(getHeaders()), String.class);
+        ResponseEntity<String> exchange = restTemplate.exchange(REST_SERVER_URI + "/1", HttpMethod.DELETE, new HttpEntity<>(HeadersBasicAuthUtils.getHeaders()), String.class);
         log.info("Delete result {}", exchange.getBody());
 
     }

@@ -1,6 +1,5 @@
 server:
   port: 8090
-  context-path: /RestApiServer
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/clinic?useSSl=false

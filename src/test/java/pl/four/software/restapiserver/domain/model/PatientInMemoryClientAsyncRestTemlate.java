@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class PatientInMemoryClientAsyncRestTemlate {
 
-    private static final String REST_SERVER_URI = "http://localhost:8090/RestApiServer/api/memory/patients";
+    private static final String REST_SERVER_URI = "http://localhost:8090/api/memory/patients";
 
     public static void main(String[] args) {
         listAllAsync();

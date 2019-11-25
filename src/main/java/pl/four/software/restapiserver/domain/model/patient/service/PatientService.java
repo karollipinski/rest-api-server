@@ -1,10 +1,10 @@
 package pl.four.software.restapiserver.domain.model.patient.service;
 
-import pl.four.software.restapiserver.domain.model.patient.dto.PatientFiltr;
-import pl.four.software.restapiserver.domain.model.patient.dto.PatientDto;
-import pl.four.software.restapiserver.domain.model.patient.entity.Patient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import pl.four.software.restapiserver.domain.model.patient.dto.PatientDto;
+import pl.four.software.restapiserver.domain.model.patient.dto.PatientFiltr;
+import pl.four.software.restapiserver.domain.model.patient.entity.Patient;
 
 import java.util.List;
 import java.util.Optional;

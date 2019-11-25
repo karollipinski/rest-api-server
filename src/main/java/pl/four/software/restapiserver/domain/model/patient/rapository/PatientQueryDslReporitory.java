@@ -1,17 +1,17 @@
 package pl.four.software.restapiserver.domain.model.patient.rapository;
 
-import pl.four.software.restapiserver.domain.model.patient.dto.PatientFiltr;
-import pl.four.software.restapiserver.domain.model.patient.dto.PatientDto;
-import pl.four.software.restapiserver.domain.model.patient.dto.QPatientDto;
-import pl.four.software.restapiserver.domain.model.patient.entity.Patient;
-import pl.four.software.restapiserver.domain.model.patient.entity.QPatient;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.JPQLQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import pl.four.software.restapiserver.domain.model.patient.dto.PatientDto;
+import pl.four.software.restapiserver.domain.model.patient.dto.PatientFiltr;
+import pl.four.software.restapiserver.domain.model.patient.dto.QPatientDto;
+import pl.four.software.restapiserver.domain.model.patient.entity.Patient;
+import pl.four.software.restapiserver.domain.model.patient.entity.QPatient;
 
-import static java.util.Optional.*;
+import static java.util.Optional.ofNullable;
 
 @Repository
 public class PatientQueryDslReporitory extends QueryDslRepositorySupportPageable {
