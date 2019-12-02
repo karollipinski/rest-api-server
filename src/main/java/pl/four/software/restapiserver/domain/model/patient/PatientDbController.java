@@ -72,6 +72,19 @@ public class PatientDbController {
         return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
     }
 
+    @PostMapping("/v2")
+    public ResponseEntity createOk(@RequestBody Patient patient) {
+        log.info("Create patient {}", patient);
+        if (patientService.isExist(patient)) {
+            log.error("Unable to create patient. PatientDto with pesel {} alredy exist", patient.getPesel());
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                                 .body(new ClinicError("Unable to update patient. PatientDto with pesel  " + patient.getPesel() + " alredy exist"));
+
+        }
+        patientService.save(patient);
+        return ResponseEntity.ok(patient);
+    }
+
     @PutMapping(value = "/{id}")
     public ResponseEntity update(@PathVariable("id") long id, @RequestBody Patient patient) {
         log.info("Update patient with id {}", id);
