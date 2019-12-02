@@ -50,7 +50,7 @@ public class PatientDbController {
     public ResponseEntity getPatient(@PathVariable("id") long id) {
         log.info("Get patient {}", id);
         return patientService.findById(id)
-                             .map(ResponseEntity::ok)
+                             .map(ResponseEntity::ok) // new ResponseEntity(body, HttpStatus.OK
                              .orElseGet(() -> new ResponseEntity(new ClinicError("PatientDto with id " + id + " not found"), HttpStatus.NOT_FOUND));
     }
 
@@ -66,7 +66,7 @@ public class PatientDbController {
         patientService.save(patient);
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setLocation(uriComponentsBuilder.path("/api/patients/{id}")
+        httpHeaders.setLocation(uriComponentsBuilder.path("/api/db/patients/{id}")
                                                     .buildAndExpand(patient.getId())
                                                     .toUri());
         return new ResponseEntity(httpHeaders, HttpStatus.CREATED);

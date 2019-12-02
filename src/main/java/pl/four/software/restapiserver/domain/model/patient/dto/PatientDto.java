@@ -28,4 +28,9 @@ public class PatientDto {
         this.pesel = pesel;
         this.date = date;
     }
+
+    public PatientDto(String name, String lastName) {
+        this.name = name;
+        this.lastName = lastName;
+    }
 }

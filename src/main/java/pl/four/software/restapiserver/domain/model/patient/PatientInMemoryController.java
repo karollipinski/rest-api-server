@@ -66,7 +66,7 @@ public class PatientInMemoryController {
         patientService.save(patient);
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setLocation(uriComponentsBuilder.path("/api/patients/{id}")
+        httpHeaders.setLocation(uriComponentsBuilder.path("/api/memory/patients/{id}")
                                                     .buildAndExpand(patient.getId())
                                                     .toUri());
         return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
