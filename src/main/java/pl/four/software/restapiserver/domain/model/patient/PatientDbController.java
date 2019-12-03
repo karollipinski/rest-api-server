@@ -60,7 +60,7 @@ public class PatientDbController {
         if (patientService.isExist(patient)) {
             log.error("Unable to create patient. PatientDto with pesel {} alredy exist", patient.getPesel());
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                                 .body(new ClinicError("Unable to update patient. PatientDto with pesel  " + patient.getPesel() + " alredy exist"));
+                                 .body(new ClinicError("Unable to update patient. PatientDto with pesel  " + patient.getPesel() + " already exist"));
 
         }
         patientService.save(patient);
@@ -78,7 +78,7 @@ public class PatientDbController {
         if (patientService.isExist(patient)) {
             log.error("Unable to create patient. PatientDto with pesel {} alredy exist", patient.getPesel());
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                                 .body(new ClinicError("Unable to update patient. PatientDto with pesel  " + patient.getPesel() + " alredy exist"));
+                                 .body(new ClinicError("Unable to update patient. PatientDto with pesel  " + patient.getPesel() + " already exist"));
 
         }
         patientService.save(patient);
