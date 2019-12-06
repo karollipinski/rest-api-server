@@ -3,6 +3,8 @@ package pl.four.software.restapiserver.domain.model.patient.service;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import pl.four.software.restapiserver.domain.model.patient.dto.PatientDto;
 import pl.four.software.restapiserver.domain.model.patient.dto.PatientFiltr;
@@ -32,11 +34,13 @@ public class PatientServiceDBImpl implements PatientService {
     }
 
     @Override
+    @Secured("ADMIN")
     public void save(Patient patient) {
         patientRepository.save(patient);
     }
 
     @Override
+    @PreAuthorize(value = "hasRole('ADMIN')")
     public void update(Patient patient) {
         patientRepository.save(patient);
     }
@@ -47,6 +51,7 @@ public class PatientServiceDBImpl implements PatientService {
     }
 
     @Override
+    @PreAuthorize(value = "hasRole('USER')")
     public List<Patient> findAll() {
         return patientRepository.findAll();
     }

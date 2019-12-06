@@ -3,15 +3,15 @@ package pl.four.software.restapiserver.domain.model.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import pl.four.software.restapiserver.domain.model.configuration.ResponseHeadersSecurityFilter;
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String CLINIC_REALM = "CLINIC_REALM";
@@ -25,8 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .disable()
             .authorizeRequests()
             .antMatchers("/api/db/patients/**")
-            .hasRole("ADMIN")
-            .antMatchers("/api/memory/patients/**").permitAll()
+            .hasAnyRole("ADMIN", "USER")
+            .antMatchers("/api/memory/patients/**")
+            .permitAll()
             .and()
             .httpBasic()
             .realmName(CLINIC_REALM)
